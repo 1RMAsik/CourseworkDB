@@ -12,7 +12,7 @@ import os
 load_dotenv()
 db = os.getenv("DB")
 
-from keyboards.menu_bar import get_menu_buttons
+from keyboards.menu_bar import get_menu_buttons, get_settings_buttons
 from models.models import Departments
 
 router = Router()
@@ -57,6 +57,10 @@ async def process_get_data_command(message: Message):
 async def cmd_catalog(message: Message):
     await message.reply("Здесь будет каталог")
 
+@router.message(F.text.lower() == "🛒 корзина")
+async def cmd_basket(message: Message):
+    await message.reply("Здесь будет корзина")
+
 @router.message(F.text.lower() == "🛠 настройки")
 async def cmd_setting(message: Message):
     await message.reply("Здесь будут настройки")
@@ -68,10 +72,25 @@ async def cmd_support(message: Message):
         text="Github", url="https://github.com/1RMAsik")
     )
     builder.row(types.InlineKeyboardButton(
-        text="Телеграм разработчика", url="https://t.me/ZachemNy")
+        text="Telegram", url="https://t.me/ZachemNy")
     )
+    builder.row(types.InlineKeyboardButton(
+        text="Discord", url="https://discordapp.com/users/561575907102556171"))
 
     await message.answer(
         'Чтобы связаться со мной выберите ссылку на Тг.',
         reply_markup=builder.as_markup()
     )
+    await message.answer('Выберите пункт',reply_markup=get_settings_buttons())
+
+@router.message(F.text.lower() == "🔙 назад")
+async def cmd_back(message: Message):
+    await message.answer("Вы вернулись назад", reply_markup=get_menu_buttons())
+
+@router.message(F.text.lower() == "👩‍💻 администатор")
+async def cmd_admin(message: Message):
+    await message.answer("Здесь будут настройки администатора")
+
+@router.message(F.text.lower() == "🔔 уведомления")
+async def cmd_notifications(message: Message):
+    await message.answer("Здесь будут настройки уведомлений")

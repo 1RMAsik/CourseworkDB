@@ -9,3 +9,11 @@ def get_menu_buttons() -> ReplyKeyboardMarkup:
     kb.button(text="🎧 Поддержка")
     kb.adjust(3)
     return kb.as_markup(resize_keyboard=True)
+
+def get_settings_buttons() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardBuilder()
+    kb.button(text="🔔 Уведомления")
+    kb.button(text="👩‍💻 Администатор")
+    kb.button(text="🔙 Назад")
+    kb.adjust(2)
+    return kb.as_markup(resize_keyboard=True)

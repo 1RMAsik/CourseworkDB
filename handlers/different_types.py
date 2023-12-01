@@ -15,3 +15,4 @@ async def message_sticker(message: Message):
 @router.message(F.animation)
 async def message_gif(message: Message):
     await message.answer("О! Это же GIF😊")
+    await message.answer_animation(animation=message.animation.file_id)
